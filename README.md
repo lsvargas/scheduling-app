@@ -5,7 +5,7 @@ This project was built using `React` + `Vite` + `Typescript` + `Tailwindcss` in 
 # Setup and Initialization
 
 ```
-$ scheduling-app  ~ docker-compose up
+$ scheduling-app ~ docker-compose up
 $ scheduling-app ~ cd backend
 $ backend        ~ rails db:create && rails db:migrate && rails db:seed
 ```
