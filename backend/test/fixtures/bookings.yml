@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_time: 2023-01-02 16:30:02
+  end_time: 2023-01-02 16:30:02
+  date: 2023-01-02
+  user: one
+  warehouse: one
+
+two:
+  start_time: 2023-01-02 16:30:02
+  end_time: 2023-01-02 16:30:02
+  date: 2023-01-02
+  user: two
+  warehouse: two
