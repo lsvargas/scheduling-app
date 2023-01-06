@@ -1,5 +1,7 @@
 # Scheduling App
 
+This project was built using `React` + `Vite` + `Typescript` + `Tailwindcss` in the front end and `Ruby on Rails` in API mode as the backend.
+
 # Setup and Initialization
 
 ```
