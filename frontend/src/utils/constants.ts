@@ -8,4 +8,22 @@ const timeIncrementOptions = [
   { value: 120, name: "2 hours"},
 ];
 
-export { timeIncrementOptions }
+const bookingStatusMapper: any = {
+  default: {
+    title: "Book time slot",
+    description: "Are you sure you want to book this slot?"
+  },
+  success: {
+    title: "Booking Successful",
+    description: "The time slot was successfully booked!"
+  },
+  error: {
+    title: "Booking Error",
+    description: "There was an error while trying to book this time slot"
+  },
+  loading: {
+    title: "Loading..."
+  }
+}
+
+export { timeIncrementOptions, bookingStatusMapper }

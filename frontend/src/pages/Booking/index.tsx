@@ -37,7 +37,7 @@ function Booking() {
 
     return () => {
       ws.close();
-   };
+    };
   }, [])
 
 

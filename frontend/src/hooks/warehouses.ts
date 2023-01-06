@@ -22,7 +22,6 @@ const useFetchWarehouses = () => {
     fetchWarehouses();
   }, [])
 
-
   return {
     loading: !warehouses,
     error: null,

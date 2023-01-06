@@ -1,22 +1,5 @@
+import { bookingStatusMapper } from "../../utils/constants";
 import Spinner from "../Spinner";
-
-const statusMapper: any = {
-  default: {
-    title: "Book time slot",
-    description: "Are you sure you want to book this slot?"
-  },
-  success: {
-    title: "Booking Successful",
-    description: "The time slot was successfully booked!"
-  },
-  error: {
-    title: "Booking Error",
-    description: "There was an error while trying to book this time slot"
-  },
-  loading: {
-    title: "Loading..."
-  }
-}
 
 interface ConfirmationModalProps {
   confirmModalCallback: any;
@@ -49,7 +32,7 @@ function ConfirmationModal({
             className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg"
           >
             <h1 className="text-2xl font-semibold">
-              {statusMapper[status]?.title}
+              {bookingStatusMapper[status]?.title}
             </h1>
             <div className="flex flex-col items-center py-5 border-t border-b border-gray-300">
               {status === "success" && (
@@ -65,7 +48,7 @@ function ConfirmationModal({
               )}
               {status === "loading" && <Spinner />}
 
-              <p className="mt-4">{statusMapper[status]?.description}</p>
+              <p className="mt-4">{bookingStatusMapper[status]?.description}</p>
             </div>
             <div className="flex justify-end">
               {status === "default" && (
