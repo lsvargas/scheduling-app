@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import Calendar from 'react-calendar';
 import { useParams } from "react-router-dom";
 
@@ -9,9 +9,8 @@ import { dateObjectToString } from "../../utils/date";
 import AvailableBookings from "../../components/booking/AvailableBooking";
 import BookingHeader from "../../components/booking/BookingHeader";
 import ConfirmationModal from "../../components/Modal";
+import { initializeWebSocket } from "../../utils/websockets";
 
-
-const ws = new WebSocket("ws://localhost:4000/cable")
 
 function Booking() {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
@@ -28,26 +27,19 @@ function Booking() {
   const { createBooking, status, setStatus } = useCreateBooking(id);
   const { wareHouseLoading, warehouse } = useFetchWarehouse(id);
 
-  ws.onopen = () => {
-    ws.send(JSON.stringify({
-      command: "subscribe",
-      identifier: JSON.stringify({
-        id: wId,
-        channel: "BookingsChannel"
-      })
-    }));
-  }
+  useEffect(() => {
+    const updateBooking = (data: any) => {
+      setAvailableBookings((bookings) => bookings?.filter((booking) => (
+        !(booking[0] === data.message.start_time) || !(booking[1] === data.message.end_time)
+      )))
+    };
+    const { ws } = initializeWebSocket(wId, updateBooking);
 
-  ws.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    if (data.type === "ping") return;
-    if (data.type === "welcome") return;
-    if (data.type === "confirm_subscription") return;
+    return () => {
+      ws.close();
+   };
+  }, [])
 
-    setAvailableBookings((bookings) => bookings?.filter((booking) => (
-      !(booking[0] === data.message.start_time) || !(booking[1] === data.message.end_time)
-    )))
-  }
 
   const dateChangeHandler = (selectedDate: Date) => {
     onDateChange(selectedDate)
