@@ -14,4 +14,4 @@ And that is all 😊
 
 ## Considerations
 
-If you are using arm-64 and run the application with Docker you might have some issues because of Vite SWC.
+If you are using ARM based architectures (Macbook M1, M2) and run the application with Docker you might have some issues because of Vite SWC in the frontend.
