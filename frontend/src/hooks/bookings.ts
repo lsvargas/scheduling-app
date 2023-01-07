@@ -23,7 +23,7 @@ const useFetchBookings = (id: string | undefined, date: string, increment: numbe
         console.log(err)
       }
     }
-    if (date && increment) fetchAvailableBookings();
+    if (date) fetchAvailableBookings();
   }, [date, increment])
 
   return {

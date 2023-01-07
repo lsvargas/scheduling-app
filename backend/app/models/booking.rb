@@ -24,24 +24,25 @@ class Booking < ApplicationRecord
     return [a, b]
   end
 
-  def self.get_available_booking_slots(warehouse_id, date, increment=15)
-    new_increment = increment * 60
+  def self.get_available_booking_slots(warehouse_id, date, increment=0)
+    fifteen_seconds_step = 900
     warehouse = Warehouse.find(warehouse_id)
-    bookings = Booking.from_warehouse(warehouse)
     op_time, cl_time = parse_date(date, warehouse)
     final_booking = []
 
-    (op_time.to_i..cl_time.to_i-1).step(new_increment) do |hour|
+    (op_time.to_i..cl_time.to_i-1).step(fifteen_seconds_step) do |hour|
       start_time = Time.at(hour)
-      end_time = Time.at(hour) + new_increment
+      end_time = Time.at(hour) + increment*60
 
-      overlapping_bookings = bookings.where(
+      overlapping_bookings = Booking.from_warehouse(warehouse).where(
         '(?, ?) OVERLAPS (start_time, end_time)',
         start_time,
         end_time
       )
 
-      final_booking.push([start_time, end_time]) if overlapping_bookings.empty?
+      if overlapping_bookings.empty? && warehouse.close_time.time.utc.strftime( "%H%M%S%N" ) >= end_time.utc.strftime( "%H%M%S%N" )
+        final_booking.push([start_time, end_time])
+      end
     end
 
     final_booking
