@@ -30,7 +30,7 @@ function Booking() {
   useEffect(() => {
     const updateBooking = (data: any) => {
       setAvailableBookings((bookings) => bookings?.filter((booking) => (
-        !(booking[0] === data.message.start_time) || !(booking[1] === data.message.end_time)
+        !(booking[0] === data.message?.start_time) || !(booking[1] === data.message?.end_time)
       )))
     };
     const { ws } = initializeWebSocket(wId, updateBooking);
